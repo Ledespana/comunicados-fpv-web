@@ -77,6 +77,10 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
 .btn { font: 700 17px var(--body); border: 2px solid var(--accent); background: var(--accent); color: #fff; border-radius: 10px; padding: 9px 18px; cursor: pointer; text-decoration: none; display: inline-block; }
 .btn:hover { filter: brightness(1.05); }
 .hint { font-size: 16px; color: var(--muted); }
+.shot { margin: 0; display: grid; gap: 6px; }
+.shot img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); display: block; }
+.shot.narrow img { max-width: 380px; width: 100%; }
+.shot figcaption { font-size: 15px; color: var(--muted); }
 
 /* Uso */
 .use { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 12px; }
@@ -148,9 +152,12 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
     <li>
       <h3>Conecta Claude con esta web</h3>
       <p>En <a href="https://claude.ai">claude.ai</a> abre <span class="path">Configuración → Personalizar → Conectores</span>, pulsa <strong>+ Añadir</strong> y elige <strong>Añadir conector personalizado</strong>. De nombre pon <strong>Comunicados FPV</strong> y pega esta dirección:</p>
+      <figure class="shot"><img src="img/paso2-anadir-conector.webp" width="1100" height="186" alt="Pantalla de Conectores de Claude con el botón + Añadir y la opción Añadir conector personalizado señalados en naranja"><figcaption>Pulsa «+ Añadir» y luego «Añadir conector personalizado» (en inglés: <em>+ Add → Add custom connector</em>).</figcaption></figure>
       <div class="copy"><output id="url-mcp">https://comunicados-fpv.netlify.app/mcp</output><button class="btn" id="copiar" type="button">Copiar dirección</button><span class="hint" id="copiado" aria-live="polite"></span></div>
       <p>Deja marcada la opción <strong>sin inicio de sesión</strong> y pulsa <strong>Añadir</strong>. Saldrá un aviso de que cualquiera con la dirección puede usarlo: es normal, porque esta web no tiene datos de nadie.</p>
+      <figure class="shot narrow"><img src="img/paso2-dialogo.webp" width="760" height="1225" alt="Ventana para añadir el conector con la opción sin inicio de sesión y el botón Añadir señalados en naranja" loading="lazy"><figcaption>Así queda antes de pulsar «Añadir». El aviso amarillo es normal.</figcaption></figure>
       <p>Después pulsa <strong>Conectar</strong>. Verás 4 herramientas («Comprobar plazo de 5 días», «Crear zona de vuelo»…). Arriba, en <strong>herramientas de solo lectura</strong>, cambia «necesita aprobación» por el <strong>✓ (permitir siempre)</strong>: solo consultan, no pueden presentar ni borrar nada, y así Claude no te pide permiso cada vez.</p>
+      <figure class="shot"><img src="img/paso2-permisos.webp" width="1100" height="568" alt="Permisos del conector: el desplegable de herramientas de solo lectura señalado en naranja" loading="lazy"><figcaption>Abre el desplegable señalado y elige la opción del ✓ (permitir siempre).</figcaption></figure>
     </li>
     <li>
       <h3>Dale a Claude las instrucciones</h3>
