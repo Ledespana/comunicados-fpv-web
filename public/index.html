@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comunicados de vuelo de dron con Claude</title>
+<meta name="description" content="Prepara la comunicación previa de vuelo de dron al Ministerio del Interior con tu Claude y Claude in Chrome. Tú solo revisas y firmas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Plano técnico de aviación: fondo frío, tinta azul pizarra, naranja de señalización para lo que hace el piloto */
+  --bg: #f3f5f8;
+  --panel: #ffffff;
+  --ink: #15212d;
+  --muted: #5b6b7b;
+  --line: #c6d0da;
+  --accent: #d9590b;
+  --accent-tint: #fdebdd;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e151d; --panel: #16202b; --ink: #e5ecf2; --muted: #92a3b3; --line: #33424f;
+    --accent: #ff8a3d; --accent-tint: #3b2415; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.55 var(--body); }
+main { max-width: 1000px; margin: 0 auto; padding: 36px 20px 48px; display: grid; gap: 48px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(36px, 6vw, 54px); }
+h2 { font-size: 31px; }
+h3 { font-size: 22px; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+code { font: 14px var(--mono); }
+header { display: grid; gap: 14px; }
+.eyebrow { font: 500 13px var(--mono); color: var(--muted); letter-spacing: .05em; }
+.lead { font-size: 20px; color: var(--muted); }
+.example { font: 500 16px var(--mono); background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; padding: 12px 16px; max-width: 640px; }
+section { display: grid; gap: 16px; }
+.steps3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.card .n { font: 500 13px var(--mono); color: var(--muted); }
+.card.yours { border-color: var(--accent); background: var(--accent-tint); }
+figure { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 12px; overflow-x: auto; }
+figcaption { font-size: 15px; color: var(--muted); max-width: 80ch; }
+svg { width: 100%; height: auto; min-width: 640px; color: var(--ink); display: block; }
+svg text { font-family: var(--body); fill: var(--ink); font-size: 14px; }
+svg .t-head { font-family: var(--display); font-weight: 700; font-size: 18px; }
+svg .t-small { font-size: 12.5px; fill: var(--muted); }
+svg .t-mono { font-family: var(--mono); font-size: 12.5px; }
+svg .t-zone { font-family: var(--mono); font-size: 12px; fill: var(--muted); letter-spacing: .05em; }
+svg .t-acc { fill: var(--accent); font-weight: 700; }
+svg .box { fill: var(--panel); stroke: var(--ink); stroke-width: 1.4; }
+svg .box-acc { fill: var(--accent-tint); stroke: var(--accent); stroke-width: 2; }
+svg .ln { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+svg .ln-ret { stroke: var(--muted); stroke-width: 1.4; fill: none; stroke-dasharray: 5 4; }
+svg .ln-acc { stroke: var(--accent); stroke-width: 2; fill: none; }
+svg .life { stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 3 4; }
+svg .mk { fill: var(--ink); }
+svg .mk-ret { fill: var(--muted); }
+svg .mk-acc { fill: var(--accent); }
+svg .band { fill: var(--accent-tint); opacity: .6; }
+ul.req { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+ol.install { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: paso; }
+ol.install li { counter-increment: paso; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px 16px 64px; position: relative; display: grid; gap: 8px; }
+ol.install li::before { content: counter(paso); position: absolute; left: 18px; top: 14px; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--bg); font: 700 18px/32px var(--display); text-align: center; }
+.copy { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.copy code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; overflow-wrap: anywhere; }
+.btn { font: 600 15px var(--body); border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 6px; padding: 7px 14px; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn.alt { background: transparent; color: var(--ink); }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.two ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.note { font-size: 15px; color: var(--muted); }
+.warn { background: var(--accent-tint); border: 1px solid var(--accent); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; }
+footer { border-top: 1px solid var(--line); padding-top: 18px; font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: opacity .15s; } .btn:hover { opacity: .85; } }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="eyebrow">PILOTOS DE DRON · ESPAÑA</div>
+  <h1>Tu comunicación de vuelo a Interior, preparada por tu Claude</h1>
+  <p class="lead">Le dices dónde y cuándo vuelas. Claude busca el sitio, comprueba ENAIRE y rellena el formulario del Ministerio del Interior en tu Chrome. Tú revisas el resumen y firmas con tu certificado.</p>
+  <div class="example">«comunicado el sábado 14 en la playa del Cristo, Estepona, de 9 a 13»</div>
+</header>
+
+<section aria-labelledby="como">
+  <h2 id="como">Cómo funciona</h2>
+  <div class="steps3">
+    <div class="card"><span class="n">1 · TÚ</span><h3>Lo pides en una frase</h3><p>Sitio y día. Si no dices horario, drones u observador, usa tus preferencias y te lo enseña en el resumen.</p></div>
+    <div class="card"><span class="n">2 · CLAUDE</span><h3>Lo prepara en tu Chrome</h3><p>Google Maps, ENAIRE Drones (si hay zona restringida, se para y te lo explica), zona de vuelo y formulario completo, verificado campo a campo.</p></div>
+    <div class="card yours"><span class="n">3 · TÚ</span><h3>Revisas y firmas</h3><p>Dices «firma» y aceptas en AutoFirma. Claude nunca firma ni presenta por su cuenta.</p></div>
+  </div>
+  <figure>
+    <svg viewBox="0 0 980 540" role="img" aria-label="Secuencia de un comunicado: el piloto lo pide, Claude consulta esta web y prepara todo en el Chrome del piloto, enseña el resumen, y solo cuando el piloto dice firma se presenta y el piloto acepta en AutoFirma.">
+      <defs>
+        <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="mk"/></marker>
+        <marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="mk-ret"/></marker>
+        <marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="mk-acc"/></marker>
+      </defs>
+      <rect x="20" y="355" width="940" height="115" rx="6" class="band"/>
+      <text x="954" y="374" text-anchor="end" class="t-zone">SOLO CUANDO TÚ DICES «FIRMA»</text>
+
+      <rect x="40" y="16" width="140" height="44" rx="8" class="box-acc"/>
+      <text x="110" y="44" text-anchor="middle" class="t-head">Tú</text>
+      <rect x="300" y="16" width="140" height="44" rx="8" class="box"/>
+      <text x="370" y="44" text-anchor="middle" class="t-head">Tu Claude</text>
+      <rect x="560" y="16" width="140" height="44" rx="8" class="box"/>
+      <text x="630" y="44" text-anchor="middle" class="t-head">Esta web</text>
+      <rect x="780" y="16" width="180" height="44" rx="8" class="box"/>
+      <text x="870" y="44" text-anchor="middle" class="t-head">Tu Chrome</text>
+
+      <line x1="110" y1="60" x2="110" y2="520" class="life"/>
+      <line x1="370" y1="60" x2="370" y2="520" class="life"/>
+      <line x1="630" y1="60" x2="630" y2="520" class="life"/>
+      <line x1="870" y1="60" x2="870" y2="520" class="life"/>
+
+      <text x="240" y="92" text-anchor="middle" class="t-small">«comunicado el sábado 14 en…»</text>
+      <line x1="110" y1="100" x2="367" y2="100" class="ln" marker-end="url(#m)"/>
+      <text x="500" y="132" text-anchor="middle" class="t-mono">instrucciones · plazo de 5 días</text>
+      <line x1="370" y1="140" x2="627" y2="140" class="ln" marker-end="url(#m)"/>
+      <text x="500" y="172" text-anchor="middle" class="t-small">recetas del formulario actualizadas</text>
+      <line x1="630" y1="180" x2="373" y2="180" class="ln-ret" marker-end="url(#mr)"/>
+      <text x="620" y="212" text-anchor="middle" class="t-small">Google Maps y ENAIRE: ¿zona sin restricciones?</text>
+      <line x1="370" y1="220" x2="867" y2="220" class="ln" marker-end="url(#m)"/>
+      <text x="500" y="252" text-anchor="middle" class="t-mono">crear_zona(36.417, −5.152, 100 m)</text>
+      <line x1="370" y1="260" x2="627" y2="260" class="ln" marker-end="url(#m)"/>
+      <text x="620" y="292" text-anchor="middle" class="t-small">Cl@ve → rellenar el formulario → verificar</text>
+      <line x1="370" y1="300" x2="867" y2="300" class="ln" marker-end="url(#m)"/>
+      <text x="240" y="332" text-anchor="middle" class="t-small">resumen + captura del mapa</text>
+      <line x1="370" y1="340" x2="113" y2="340" class="ln-ret" marker-end="url(#mr)"/>
+      <text x="240" y="392" text-anchor="middle" class="t-acc">«firma»</text>
+      <line x1="110" y1="400" x2="367" y2="400" class="ln-acc" marker-end="url(#ma)"/>
+      <text x="620" y="422" text-anchor="middle" class="t-small">«Firmar y presentar»</text>
+      <line x1="370" y1="430" x2="867" y2="430" class="ln" marker-end="url(#m)"/>
+      <text x="490" y="452" text-anchor="middle" class="t-acc">aceptas en AutoFirma</text>
+      <line x1="110" y1="458" x2="867" y2="458" class="ln-acc" marker-end="url(#ma)"/>
+      <text x="240" y="502" text-anchor="middle" class="t-small">nº de comunicación + acuse en Descargas</text>
+      <line x1="370" y1="510" x2="113" y2="510" class="ln-ret" marker-end="url(#mr)"/>
+    </svg>
+    <figcaption>Esta web solo le da a Claude las instrucciones del formulario y calcula la zona de vuelo y el plazo. No guarda tus datos ni entra en la sede de Interior: eso ocurre en tu Chrome, con tu certificado.</figcaption>
+  </figure>
+</section>
+
+<section aria-labelledby="req">
+  <h2 id="req">Qué necesitas</h2>
+  <ul class="req">
+    <li><strong>Ordenador Mac o Windows</strong> con <strong>Google Chrome</strong>.</li>
+    <li><strong>Una cuenta de Claude</strong> con plan de pago (Pro o superior) que permita conectores personalizados.</li>
+    <li>La extensión <strong>Claude in Chrome</strong> (Chrome Web Store → «Claude», de Anthropic), con la misma cuenta.</li>
+    <li><strong>Certificado digital FNMT</strong> de persona física instalado y <strong>AutoFirma</strong> (<a href="https://firmaelectronica.gob.es/Home/Descargas.html">descarga oficial</a>).</li>
+    <li>Tus documentos de AESA: <strong>registro de operador UAS</strong> (ESP…) y <strong>certificado de piloto A1/A3</strong> (ESP-RP-…), de <a href="https://sede.seguridadaerea.gob.es">sede.seguridadaerea.gob.es</a>.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="inst">
+  <h2 id="inst">Instalación (una sola vez, unos 15 minutos)</h2>
+  <ol class="install">
+    <li>
+      <h3>Instala Claude in Chrome</h3>
+      <p>En Chrome: Chrome Web Store → busca «Claude» (editor: Anthropic) → Añadir a Chrome. Fíjala con la chincheta e inicia sesión con tu cuenta de Claude.</p>
+    </li>
+    <li>
+      <h3>Añade el conector «Comunicados FPV»</h3>
+      <p>En claude.ai: Configuración → Conectores → Añadir conector personalizado. Nombre: <strong>Comunicados FPV</strong>. URL:</p>
+      <div class="copy"><code id="url-mcp">https://comunicados-fpv.netlify.app/mcp</code><button class="btn" id="copiar" type="button">Copiar</button><span class="note" id="copiado" aria-live="polite"></span></div>
+    </li>
+    <li>
+      <h3>Sube la skill</h3>
+      <p>Descarga el archivo y súbelo en claude.ai: Configuración → Capacidades → Skills → Subir skill. Así Claude sabe cómo hacer un comunicado.</p>
+      <div class="btns"><a class="btn" href="descargas/comunicado-vuelo.zip" download>Descargar skill (.zip)</a></div>
+    </li>
+    <li>
+      <h3>Crea tu Proyecto con tu perfil</h3>
+      <p>En claude.ai crea un Proyecto llamado <strong>Comunicados FPV</strong>. Dentro, escribe <strong>«configúrame»</strong> y arrastra tus PDF de AESA: Claude saca tus números de operador y piloto, te pregunta lo que falta (DNI, teléfono, drones) y te prepara tu <code>perfil.yaml</code> para que lo añadas a los archivos del Proyecto.</p>
+      <div class="btns"><a class="btn alt" href="descargas/perfil.yaml" download>Plantilla perfil.yaml (para rellenarla a mano)</a></div>
+    </li>
+    <li>
+      <h3>Pide tu primer comunicado</h3>
+      <p>Abre Chrome y, dentro del Proyecto, escribe por ejemplo: <em>«comunicado el 20 en Genalguacil»</em>. Pon Claude y Chrome uno al lado del otro para ver cómo rellena cada campo.</p>
+    </li>
+  </ol>
+  <p class="note">Los nombres de los menús de claude.ai pueden variar un poco según la versión. Si algo no aparece, pregúntale a Claude «¿cómo añado un conector personalizado?».</p>
+</section>
+
+<section aria-labelledby="hace">
+  <h2 id="hace">Qué hace y qué no</h2>
+  <div class="two">
+    <div class="card">
+      <h3>Hace</h3>
+      <ul>
+        <li>Comunicados de 1 o varios días en una sola comunicación.</li>
+        <li>Zona de vuelo automática: 100 m en un sitio concreto, 500 m si solo dices el pueblo.</li>
+        <li>Comprueba ENAIRE Drones antes de nada.</li>
+        <li>Avisa si no llegas al plazo de 5 días naturales.</li>
+        <li>Clona tus comunicaciones anteriores cuando repites sitio.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>No hace</h3>
+      <ul>
+        <li>No firma por ti ni escribe contraseñas.</li>
+        <li>No tramita zonas restringidas (CECAF/ZRVF, Defensa, aeropuertos, parques nacionales): solo te avisa.</li>
+        <li>No sirve para drones de construcción propia de 250 g o más en zona urbana (solo categoría A3).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="priv">
+  <h2 id="priv">Privacidad</h2>
+  <p>Esta web <strong>no guarda ningún dato tuyo</strong>: no tiene cuentas ni base de datos. Tu perfil (DNI, teléfono, números de AESA) se queda en tu Proyecto de claude.ai, y tu certificado y AutoFirma en tu ordenador. El conector solo recibe las coordenadas del sitio y la fecha del vuelo para calcular la zona y el plazo.</p>
+</section>
+
+<div class="warn">
+  <strong>Aviso</strong>
+  <p>Proyecto personal sin relación con el Ministerio del Interior, AESA ni ENAIRE. Eres responsable de lo que presentas y de cumplir la normativa (Reglamento (UE) 2019/947 y Real Decreto 517/2024). Revisa siempre el resumen antes de firmar.</p>
+</div>
+
+<footer>
+  <span>Comunicados FPV · conector gratuito para pilotos de dron en España.</span>
+</footer>
+
+</main>
+<script>
+  (function () {
+    var code = document.getElementById("url-mcp");
+    if (location.protocol === "https:" || location.hostname === "localhost") {
+      code.textContent = location.origin + "/mcp";
+    }
+    document.getElementById("copiar").addEventListener("click", function () {
+      var aviso = document.getElementById("copiado");
+      navigator.clipboard.writeText(code.textContent).then(
+        function () { aviso.textContent = "Copiado"; },
+        function () { aviso.textContent = "Selecciona la dirección y cópiala a mano"; }
+      );
+    });
+  })();
+</script>
+</body>
+</html>
