@@ -23,7 +23,7 @@ al Ministerio del Interior (`drones.ses.mir.es`) con **Claude in Chrome**. El pi
 Requisitos: Chrome, certificado FNMT y AutoFirma instalados; plan de Claude con conectores personalizados.
 1. **Claude in Chrome:** instala la extensión "Claude" (Anthropic) en Chrome e inicia sesión con tu cuenta de Claude.
 2. **Conector:** claude.ai → Configuración → Personalizar → Conectores → *+ Añadir* → *Añadir conector personalizado* (sin inicio de sesión) → URL
-   `https://<sitio>.netlify.app/mcp`.
+   `https://<sitio>.netlify.app/mcp`. Luego **Conectar** y, en "Read-only tools", **permitir siempre** (las 4 son de solo lectura).
 3. **Skill:** descarga `https://<sitio>.netlify.app/descargas/comunicado-vuelo.zip` (se genera al desplegar) y súbela en claude.ai → Configuración → Personalizar → Skills → *+ Añadir*.
 4. **Proyecto:** crea un Proyecto "Drones", escribe "configúrame" y arrastra tus PDF de AESA. Claude te prepara tus
    datos y te dice cómo pegarlos en las instrucciones del Proyecto (o sube un `perfil.yaml` si ya lo tienes).
