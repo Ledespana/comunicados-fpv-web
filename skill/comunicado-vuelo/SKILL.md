@@ -8,12 +8,12 @@ description: Prepara en Chrome una comunicación previa de vuelo de dron (UAS) a
 1. Llama a la herramienta `instrucciones_comunicado` del conector **Comunicados FPV** y sigue esas instrucciones:
    son las recetas actualizadas del formulario. Si el conector no está disponible, dile al usuario que lo añada
    (Configuración → Conectores → Añadir conector personalizado) y no improvises el formulario.
-2. Datos del piloto: archivo `perfil.yaml` de este Proyecto. Si no existe, o el usuario dice "configúrame", usa
-   `plantilla_perfil` y el §0 de las instrucciones para crearlo con él.
+2. Datos del piloto: archivo `perfil.yaml` o bloque "Perfil del piloto" en las instrucciones de este Proyecto. Si no
+   están, o el usuario dice "configúrame", sigue el §0 de las instrucciones para crearlos con él.
 3. Usa Claude in Chrome (el Chrome del usuario) para Google Maps, ENAIRE y la sede de Interior.
 
 Reglas que no cambian nunca:
-- Habla siempre en español, claro y sin tecnicismos.
+- Habla siempre en español, claro y sin tecnicismos: el usuario puede no saber nada de informática.
 - No pulses "Firmar y presentar" sin un "firma" explícito del usuario para esa comunicación.
 - No escribas contraseñas ni elijas certificados por el usuario.
 - Operador (ESP…) y piloto (ESP-RP-…) son números distintos: los dos, etiquetados, siempre desde `perfil.yaml`.

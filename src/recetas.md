@@ -1,7 +1,7 @@
 # Comunicación de vuelo UAS – Ministerio del Interior (recetas v1)
 
 Estas instrucciones las sirve el conector "Comunicados FPV" con `instrucciones_comunicado`. Síguelas en orden.
-Datos del piloto: archivo `perfil.yaml` del Proyecto de claude.ai (operador, piloto, drones, observadores,
+Datos del piloto: `perfil.yaml` (archivo del Proyecto o bloque "Perfil del piloto" en sus instrucciones) (operador, piloto, drones, observadores,
 preferencias, ubicaciones). Si no existe, ayuda al usuario a rellenarlo a partir de la plantilla del conector
 (ver §0) antes de nada.
 
@@ -14,15 +14,24 @@ Reglas fijas:
   (ESP…, va en "Número de registro de operador") y **piloto** = `piloto.certificado_competencia` (ESP-RP-…, va en
   "Certificado de competencia de piloto"). Son distintos: nunca uno en lugar del otro.
 - Teléfono del operador SIEMPRE en "Datos del Operador > Teléfono de contacto" (lo pide la Guardia Civil).
-- Habla siempre en español, claro y sin tecnicismos.
+- Habla siempre en español, claro y sin tecnicismos: el usuario puede no saber nada de informática. No le digas
+  palabras como YAML, JSON, conector, MCP, skill, JavaScript, PrimeFaces o ajax; di "tus datos", "el formulario",
+  "la web de Interior". Si algo falla, explícale qué tiene que hacer él, en una o dos frases.
 
-## 0. Perfil
-Si el Proyecto no tiene `perfil.yaml`: pide al usuario sus PDF de AESA (certificado de registro de operador UAS con
-logo EASA, y certificado A1/A3 del piloto), sácales nombre, nº de operador (ESP…) y nº de piloto (ESP-RP-…), pregunta
-en un solo mensaje DNI/NIE, dirección, email, teléfono móvil y drones (fabricante, modelo, peso con batería, autonomía,
-color, radio, luces), y genera el `perfil.yaml` completo para que el usuario lo suba a los archivos del Proyecto.
-Dron de construcción propia ≥ 250 g → solo categoría A3 (lejos de personas, >150 m de zonas urbanas): nunca en
-comunicaciones de vuelo urbano.
+## 0. Perfil ("configúrame")
+Si el Proyecto no tiene los datos del piloto (archivo `perfil.yaml` o un bloque "Perfil del piloto" en las
+instrucciones del Proyecto):
+1. Pide sus dos PDF de AESA (registro de operador UAS, el que tiene logo EASA y fecha de caducidad; y el certificado
+   de piloto A1/A3). Sácales nombre, nº de operador (ESP…) y nº de piloto (ESP-RP-…) y enséñaselos para que confirme.
+2. Pregunta en un solo mensaje, en lenguaje sencillo: DNI o NIE, dirección completa, email, teléfono móvil
+   (obligatorio) y qué drones tiene (marca y modelo; el peso, autonomía, color, radio y luces los buscas tú si es un
+   modelo comercial conocido y solo le preguntas lo que no encuentres).
+3. Rellena la plantilla (`plantilla_perfil`) y dale el resultado en UN solo bloque para copiar, con estas
+   instrucciones, paso a paso y sin palabras técnicas: "Copia el texto de abajo (botón de copiar). Luego, en este
+   Proyecto, abre las instrucciones del proyecto, pega el texto debajo del título «Perfil del piloto» y guarda.
+   Así la próxima vez ya lo sabré."
+Dron de construcción propia de 250 g o más → solo puede volar lejos de personas y de zonas urbanas (categoría A3):
+explícalo con esas palabras y no lo incluyas en comunicaciones de vuelo urbano.
 
 ## 1. Datos del vuelo: valores por defecto, NO preguntes
 El usuario quiere decir una frase ("comunicado el 20 en Genalguacil") y nada más. Resuelve con estos valores por

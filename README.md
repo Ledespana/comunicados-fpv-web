@@ -25,8 +25,8 @@ Requisitos: Chrome, certificado FNMT y AutoFirma instalados; plan de Claude con 
 2. **Conector:** claude.ai → Configuración → Conectores → *Añadir conector personalizado* → URL
    `https://<sitio>.netlify.app/mcp`.
 3. **Skill:** descarga `https://<sitio>.netlify.app/descargas/comunicado-vuelo.zip` (se genera al desplegar) y súbela en claude.ai → Configuración → Capacidades → Skills.
-4. **Proyecto:** crea un Proyecto "Comunicados FPV" y sube tu `perfil.yaml` (o pide a Claude "configúrame" dentro del
-   Proyecto y te ayuda a crearlo a partir de tus PDF de AESA).
+4. **Proyecto:** crea un Proyecto "Drones", escribe "configúrame" y arrastra tus PDF de AESA. Claude te prepara tus
+   datos y te dice cómo pegarlos en las instrucciones del Proyecto (o sube un `perfil.yaml` si ya lo tienes).
 5. Dentro del Proyecto: *"comunicado el 20 en Genalguacil"*.
 
 ## Desarrollo
@@ -39,7 +39,8 @@ npx netlify-cli dev   # http://localhost:8888/mcp
 Las recetas se editan en `src/recetas.md`; `npm run build` las empaqueta en `src/textos.gen.ts` y genera
 `public/descargas/` (skill en .zip y plantilla de perfil). Netlify lo hace solo al desplegar.
 
-Todo lo que ve el piloto (web, skill, recetas, mensajes de error) va en **español**.
+Todo lo que ve el piloto (web, skill, recetas, mensajes de error) va en **español** y en lenguaje para gente no
+técnica: nada de "MCP", "YAML" o "skill" en la portada ni en lo que Claude le dice.
 `docs/propuesta.html` es la propuesta interna con los diagramas (no se publica).
 
 ## Licencia
