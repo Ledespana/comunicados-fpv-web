@@ -147,12 +147,13 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
     </li>
     <li>
       <h3>Conecta Claude con esta web</h3>
-      <p>En <a href="https://claude.ai">claude.ai</a> ve a <span class="path">Configuración → Conectores → Añadir conector personalizado</span>. De nombre pon <strong>Comunicados FPV</strong> y pega esta dirección:</p>
+      <p>En <a href="https://claude.ai">claude.ai</a> abre <span class="path">Configuración → Personalizar → Conectores</span>, pulsa <strong>+ Añadir</strong> y elige <strong>Añadir conector personalizado</strong>. De nombre pon <strong>Comunicados FPV</strong> y pega esta dirección:</p>
       <div class="copy"><output id="url-mcp">https://comunicados-fpv.netlify.app/mcp</output><button class="btn" id="copiar" type="button">Copiar dirección</button><span class="hint" id="copiado" aria-live="polite"></span></div>
+      <p>Deja marcada la opción <strong>sin inicio de sesión</strong> y pulsa <strong>Añadir</strong>. Saldrá un aviso de que cualquiera con la dirección puede usarlo: es normal, porque esta web no tiene datos de nadie.</p>
     </li>
     <li>
       <h3>Dale a Claude las instrucciones</h3>
-      <p>Descarga este archivo. En claude.ai ve a <span class="path">Configuración → Capacidades → Skills</span> y súbelo tal cual, sin abrirlo.</p>
+      <p>Descarga este archivo. En claude.ai abre <span class="path">Configuración → Personalizar → Skills</span>, pulsa <strong>+ Añadir</strong> y súbelo tal cual, sin abrirlo.</p>
       <div><a class="btn" href="descargas/comunicado-vuelo.zip" download>Descargar instrucciones</a></div>
     </li>
     <li>
@@ -161,7 +162,7 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
       <p>Claude te hará unas pocas preguntas (DNI, teléfono, qué drones tienes) y te dirá dónde guardar tus datos para la próxima vez.</p>
     </li>
   </ol>
-  <p class="hint">Los nombres de los menús de claude.ai pueden cambiar un poco. Si te pierdes, pregúntale a Claude: «¿cómo añado un conector personalizado?».</p>
+  <p class="hint">Si tienes Claude en inglés, los menús son <em>Settings → Customize → Connectors</em> (o <em>Skills</em>) → <em>+ Add</em>. Los nombres pueden cambiar un poco; si te pierdes, pregúntale a Claude: «¿cómo añado un conector personalizado?».</p>
 </section>
 
 <section aria-labelledby="volar">
