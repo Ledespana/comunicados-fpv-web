@@ -85,6 +85,14 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
 /* Uso */
 .use { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 12px; }
 .use ul { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.use h3 { font-size: 25px; }
+ol.flow { margin: 0; padding-left: 24px; display: grid; gap: 8px; }
+ol.flow li::marker { font-weight: 700; color: var(--accent); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.card { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.card .n { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .05em; }
+.card h3 { font-size: 21px; }
+section > .use + .use { margin-top: 2px; }
 
 /* Preguntas */
 .faq { display: grid; gap: 22px; }
@@ -160,28 +168,53 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
     </li>
   </ol>
   <p><strong>Y ya está.</strong> Si te pierdes en algún menú, pregúntale a Claude: «¿cómo añado un conector personalizado?».</p>
-  <div class="use">
-    <h3>Opcional: comprueba que todo funciona</h3>
-    <p>Con Chrome abierto, escríbele a Claude <strong>«configúrame»</strong>. Te preguntará:</p>
-    <ul>
-      <li><strong>«Ya he hecho alguna comunicación en la web de Interior»</strong>: coge tus datos de ahí y te enseña lo que usará.</li>
-      <li><strong>«Es la primera vez»</strong>: te pregunta tu teléfono, qué dron vuelas y tus números de AESA (o arrastras tus PDF de AESA).</li>
-    </ul>
-    <p class="hint">En los dos casos entra en la web de Interior con tu certificado, así sabrás que funciona antes del día que quieras volar.</p>
-  </div>
 </section>
 
-<section aria-labelledby="volar">
-  <h2 id="volar">Cada vez que vayas a volar</h2>
+<section aria-labelledby="usar">
+  <h2 id="usar">Cómo se usa</h2>
+
   <div class="use">
-    <ul>
-      <li>Hazlo con <strong>al menos 5 días</strong> de antelación (lo exige Interior).</li>
-      <li>Abre Chrome y la app de Claude, y escríbele como a una persona: <em>«quiero volar el 20 en Genalguacil»</em>.</li>
-      <li>La primera vez te pedirá permiso para usar «Comunicados FPV»: pulsa <strong>Permitir siempre</strong>.</li>
-      <li>Si nunca has hecho una comunicación, te preguntará tu teléfono, qué dron vuelas y tus números de AESA. Si ya has hecho alguna, copia la última y no te pregunta nada.</li>
-      <li>Revisa el resumen, di <strong>«firma»</strong> y acepta con tu certificado.</li>
-    </ul>
+    <h3>Antes de nada (opcional, recomendado): «configúrame»</h3>
+    <p>Abre Chrome y la app de Claude, y escribe <strong>«configúrame»</strong>. Claude te preguntará cómo quieres empezar:</p>
+    <div class="two">
+      <div class="card">
+        <span class="n">OPCIÓN 1</span>
+        <h3>Ya he hecho alguna comunicación</h3>
+        <p>Claude entra en la web de Interior, mira tu última comunicación y te enseña los datos que usará: tus números de AESA, tu teléfono, tus drones y tu observador. Si falta algo (por ejemplo el teléfono), te lo pide una vez.</p>
+      </div>
+      <div class="card">
+        <span class="n">OPCIÓN 2</span>
+        <h3>Es la primera vez</h3>
+        <p>Te pregunta tu teléfono, qué dron vuelas y tus dos números de AESA (o arrastras al chat tus PDF de AESA). Tu nombre, DNI y dirección los saca la web de Interior de tu certificado.</p>
+      </div>
+    </div>
+    <p class="hint">En los dos casos entra en la web de Interior con tu certificado. Así sabes que todo funciona antes del día que quieras volar.</p>
+  </div>
+
+  <div class="use">
+    <h3>Cada vez que vayas a volar</h3>
+    <ol class="flow">
+      <li><strong>Con al menos 5 días de antelación</strong> (lo exige Interior), abre Chrome y la app de Claude.</li>
+      <li>Escríbele como a una persona: <em>«quiero volar el sábado 14 en la playa del Cristo, Estepona, de 9 a 13»</em>. Si no dices hora, pone el día entero; si no dices dron, usa los de tu última comunicación.</li>
+      <li>La primera vez te pedirá permiso para usar <strong>Comunicados FPV</strong>: pulsa <strong>Permitir siempre</strong>.</li>
+      <li>Verás que en Chrome aparece un <strong>grupo de pestañas</strong> de color: ahí trabaja Claude. Haz clic en él para verlo rellenar.</li>
+      <li>Al entrar en Interior puede salir una ventana para <strong>elegir tu certificado</strong>: elige el tuyo (nunca «Cancelar»).</li>
+      <li>Claude comprueba el mapa de ENAIRE, copia tu última comunicación (o la crea si es la primera) y te enseña un <strong>resumen con el mapa</strong>.</li>
+      <li>Si está bien, di <strong>«firma»</strong> y acepta en AutoFirma. Si no, dile qué cambiar: «mejor de 10 a 12», «solo con el Pavo».</li>
+      <li>Al terminar te da el número de comunicación y el justificante queda en tu carpeta <strong>Descargas</strong>.</li>
+    </ol>
     <p class="hint">Truco: pon Claude en una mitad de la pantalla y Chrome en la otra, y verás cómo rellena cada casilla.</p>
+  </div>
+
+  <div class="use">
+    <h3>Si algo no va</h3>
+    <ul>
+      <li><strong>Claude no hace nada en tu Chrome:</strong> comprueba que Chrome está abierto y que la extensión de Claude tiene la sesión iniciada. Si usas Claude en varios ordenadores, dile «usa el Chrome de este ordenador».</li>
+      <li><strong>Claude no usa Comunicados FPV:</strong> en el menú de herramientas del chat (junto al cuadro de texto), comprueba que «Comunicados FPV» y «Claude in Chrome» están activados.</li>
+      <li><strong>«No ha seleccionado ningún certificado» o un error de Cl@ve:</strong> cierra Chrome del todo (en Mac, Cmd+Q; en Windows, todas las ventanas), ábrelo y pídele que lo intente otra vez.</li>
+      <li><strong>Te dice que la zona tiene restricciones:</strong> ese sitio necesita otro permiso (aeropuerto, zona militar, parque nacional o zona de fotos restringidas). Elige otro sitio.</li>
+      <li><strong>Te dice que no llegas al plazo:</strong> la comunicación tiene que hacerse al menos 5 días antes del vuelo.</li>
+    </ul>
   </div>
 </section>
 
