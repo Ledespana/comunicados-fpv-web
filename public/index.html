@@ -137,13 +137,13 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
     <li><strong>Un ordenador (Mac o Windows) con Google Chrome</strong><span class="how">El móvil no sirve para esto, porque la firma se hace en el ordenador.</span></li>
     <li><strong>Una cuenta de Claude de pago (plan Pro)</strong><span class="how">Te la haces en <a href="https://claude.ai">claude.ai</a>. Es lo único que cuesta dinero; esta web es gratis.</span></li>
     <li><strong>Tu certificado digital y AutoFirma</strong><span class="how">Lo mismo que usas para Hacienda o la DGT. Si no lo tienes: el certificado se pide en la <a href="https://www.sede.fnmt.gob.es/certificados/persona-fisica">FNMT</a> y AutoFirma se descarga <a href="https://firmaelectronica.gob.es/Home/Descargas.html">aquí</a>.</span></li>
-    <li><strong>Tus dos papeles de AESA</strong><span class="how">El de registro como operador de drones y el certificado de piloto (A1/A3), en PDF. Se descargan en la <a href="https://sede.seguridadaerea.gob.es">sede de AESA</a>.</span></li>
+    <li><strong>Estar registrado en AESA</strong><span class="how">Como operador de drones y con el certificado de piloto (A1/A3). La primera vez Claude te pedirá los dos números o los PDF, que se descargan en la <a href="https://sede.seguridadaerea.gob.es">sede de AESA</a>.</span></li>
   </ul>
 </section>
 
 <section aria-labelledby="preparar">
-  <h2 id="preparar">Prepáralo una sola vez</h2>
-  <p>Son unos 15 minutos. Después ya no tendrás que volver a hacerlo.</p>
+  <h2 id="preparar">Prepáralo una sola vez: 2 pasos</h2>
+  <p>Son 5 minutos. No tienes que rellenar ningún formulario ni subir nada: tus datos ya están en tu cuenta de Interior, y lo que falte te lo pregunta Claude la primera vez.</p>
   <ol class="setup">
     <li>
       <h3>Añade Claude a tu Chrome</h3>
@@ -151,26 +151,15 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
     </li>
     <li>
       <h3>Conecta Claude con esta web</h3>
-      <p>En <a href="https://claude.ai">claude.ai</a> abre <span class="path">Configuración → Personalizar → Conectores</span>, pulsa <strong>+ Añadir</strong> y elige <strong>Añadir conector personalizado</strong>. De nombre pon <strong>Comunicados FPV</strong> y pega esta dirección:</p>
-      <figure class="shot"><img src="img/paso2-anadir-conector.webp" width="1100" height="186" alt="Pantalla de Conectores de Claude con el botón + Añadir y la opción Añadir conector personalizado señalados en naranja"><figcaption>Pulsa «+ Añadir» y luego «Añadir conector personalizado» (en inglés: <em>+ Add → Add custom connector</em>).</figcaption></figure>
+      <p>En la app de Claude abre <span class="path">Configuración → Personalizar → Conectores</span>, pulsa <strong>+ Añadir</strong> y elige <strong>Añadir conector personalizado</strong>.</p>
+      <figure class="shot"><img src="img/paso2-anadir-conector.webp" width="1100" height="186" alt="Pantalla de Conectores de Claude con el botón + Añadir y la opción Añadir conector personalizado señalados en naranja"><figcaption>En inglés: <em>Settings → Customize → Connectors → + Add → Add custom connector</em>.</figcaption></figure>
+      <p>De nombre pon <strong>Comunicados FPV</strong> y pega esta dirección:</p>
       <div class="copy"><output id="url-mcp">https://comunicados-fpv.netlify.app/mcp</output><button class="btn" id="copiar" type="button">Copiar dirección</button><span class="hint" id="copiado" aria-live="polite"></span></div>
-      <p>Deja marcada la opción <strong>sin inicio de sesión</strong> y pulsa <strong>Añadir</strong>. Saldrá un aviso de que cualquiera con la dirección puede usarlo: es normal, porque esta web no tiene datos de nadie.</p>
-      <figure class="shot narrow"><img src="img/paso2-dialogo.webp" width="760" height="1225" alt="Ventana para añadir el conector con la opción sin inicio de sesión y el botón Añadir señalados en naranja" loading="lazy"><figcaption>Así queda antes de pulsar «Añadir». El aviso amarillo es normal.</figcaption></figure>
-      <p>Después pulsa <strong>Conectar</strong>. Verás 4 herramientas («Comprobar plazo de 5 días», «Crear zona de vuelo»…). Arriba, en <strong>herramientas de solo lectura</strong>, cambia «necesita aprobación» por el <strong>✓ (permitir siempre)</strong>: solo consultan, no pueden presentar ni borrar nada, y así Claude no te pide permiso cada vez.</p>
-      <figure class="shot"><img src="img/paso2-permisos.webp" width="1100" height="568" alt="Permisos del conector: el desplegable de herramientas de solo lectura señalado en naranja" loading="lazy"><figcaption>Abre el desplegable señalado y elige la opción del ✓ (permitir siempre).</figcaption></figure>
-    </li>
-    <li>
-      <h3>Dale a Claude las instrucciones</h3>
-      <p>Descarga este archivo. En claude.ai abre <span class="path">Configuración → Personalizar → Skills</span>, pulsa <strong>+ Añadir</strong> y súbelo tal cual, sin abrirlo.</p>
-      <div><a class="btn" href="descargas/comunicado-vuelo.zip" download>Descargar instrucciones</a></div>
-    </li>
-    <li>
-      <h3>Cuéntale a Claude quién eres</h3>
-      <p>En claude.ai crea un <strong>Proyecto</strong> llamado <strong>Drones</strong>. Un Proyecto es como una carpeta de conversaciones donde Claude recuerda tus datos. Dentro, escribe <strong>«configúrame»</strong> y arrastra tus dos PDF de AESA.</p>
-      <p>Claude te hará unas pocas preguntas (DNI, teléfono, qué drones tienes) y te dirá dónde guardar tus datos para la próxima vez.</p>
+      <p>Deja marcada la opción <strong>sin inicio de sesión</strong> y pulsa <strong>Añadir</strong> y luego <strong>Conectar</strong>. El aviso amarillo es normal: esta web no tiene datos de nadie.</p>
+      <figure class="shot narrow"><img src="img/paso2-dialogo.webp" width="760" height="1225" alt="Ventana para añadir el conector con la opción sin inicio de sesión y el botón Añadir señalados en naranja" loading="lazy"><figcaption>Así queda antes de pulsar «Añadir».</figcaption></figure>
     </li>
   </ol>
-  <p class="hint">Si tienes Claude en inglés, los menús son <em>Settings → Customize → Connectors</em> (o <em>Skills</em>) → <em>+ Add</em>. Los nombres pueden cambiar un poco; si te pierdes, pregúntale a Claude: «¿cómo añado un conector personalizado?».</p>
+  <p><strong>Y ya está.</strong> Si te pierdes en algún menú, pregúntale a Claude: «¿cómo añado un conector personalizado?».</p>
 </section>
 
 <section aria-labelledby="volar">
@@ -178,8 +167,9 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
   <div class="use">
     <ul>
       <li>Hazlo con <strong>al menos 5 días</strong> de antelación (lo exige Interior).</li>
-      <li>Abre Chrome y, en claude.ai, entra en tu Proyecto <strong>Drones</strong>.</li>
-      <li>Escríbele como a una persona: <em>«quiero volar el 20 en Genalguacil»</em>.</li>
+      <li>Abre Chrome y la app de Claude, y escríbele como a una persona: <em>«quiero volar el 20 en Genalguacil»</em>.</li>
+      <li>La primera vez te pedirá permiso para usar «Comunicados FPV»: pulsa <strong>Permitir siempre</strong>.</li>
+      <li>Si es tu primera comunicación, te preguntará tu teléfono, qué dron vuelas y tus números de AESA (o arrastra tus PDF de AESA al chat). Las siguientes veces ya no: copia tu última comunicación.</li>
       <li>Revisa el resumen, di <strong>«firma»</strong> y acepta con tu certificado.</li>
     </ul>
     <p class="hint">Truco: pon Claude en una mitad de la pantalla y Chrome en la otra, y verás cómo rellena cada casilla.</p>
@@ -199,7 +189,7 @@ ol.setup li::before { content: counter(paso); position: absolute; left: 20px; to
     </div>
     <div>
       <h3>¿Dónde quedan mis datos?</h3>
-      <p>En tu cuenta de Claude y en tu ordenador. Esta web no guarda nada tuyo: no tiene registro ni contraseñas.</p>
+      <p>Donde ya estaban: en tu cuenta de la sede de Interior (tus comunicaciones anteriores) y en tus conversaciones con Claude. Esta web no guarda nada tuyo: no tiene registro ni contraseñas.</p>
     </div>
     <div>
       <h3>¿Y si quiero volar en una zona con restricciones?</h3>

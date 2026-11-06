@@ -4,4 +4,3 @@ src/textos.gen.ts
 .DS_Store
 perfil.yaml
 *.pdf
-public/descargas/

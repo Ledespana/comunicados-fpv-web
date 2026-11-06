@@ -5,7 +5,9 @@ al Ministerio del Interior (`drones.ses.mir.es`) con **Claude in Chrome**. El pi
 **"firma"** y acepta en AutoFirma.
 
 - La IA la paga la suscripción de cada piloto. El servidor es una función de Netlify (plan gratuito).
-- **Fase 1: el conector no guarda datos personales.** El perfil del piloto vive en su Proyecto de claude.ai.
+- **Sin configuración ni datos personales:** no hay perfil, Proyecto ni skill. Los datos del piloto ya están en su
+  cuenta de la sede de Interior (operador precargado con el certificado, "Mis pilotos", comunicaciones anteriores que
+  se clonan); lo que falte la primera vez, Claude lo pregunta en el chat.
 - Funciona igual en Mac y Windows: todo ocurre en Chrome.
 
 > ⚠️ Proyecto personal, sin relación con el Ministerio del Interior, AESA ni ENAIRE. El piloto es responsable de lo
@@ -15,19 +17,20 @@ al Ministerio del Interior (`drones.ses.mir.es`) con **Claude in Chrome**. El pi
 | Herramienta | Qué hace |
 |---|---|
 | `instrucciones_comunicado` | Recetas actualizadas del formulario de Interior (`src/recetas.md`) |
-| `plantilla_perfil` | Plantilla `perfil.yaml` (`proyecto/perfil.ejemplo.yaml`) |
 | `crear_zona(lat, lon, radio_m)` | Zona circular en el formato del formulario (`src/zona.ts`) |
 | `comprobar_plazo(fecha)` | ≥ 5 días naturales, hora de España (`src/plazo.ts`) |
 
-## Instalación para un piloto
-Requisitos: Chrome, certificado FNMT y AutoFirma instalados; plan de Claude con conectores personalizados.
+Las tres son de solo lectura. Las instrucciones del servidor le dicen a Claude que llame a `instrucciones_comunicado`
+antes de nada, así que no hace falta skill.
+
+## Instalación para un piloto (2 pasos)
+Requisitos: Chrome, certificado FNMT y AutoFirma; plan de Claude de pago.
 1. **Claude in Chrome:** instala la extensión "Claude" (Anthropic) en Chrome e inicia sesión con tu cuenta de Claude.
-2. **Conector:** claude.ai → Configuración → Personalizar → Conectores → *+ Añadir* → *Añadir conector personalizado* (sin inicio de sesión) → URL
-   `https://<sitio>.netlify.app/mcp`. Luego **Conectar** y, en "Read-only tools", **permitir siempre** (las 4 son de solo lectura).
-3. **Skill:** descarga `https://<sitio>.netlify.app/descargas/comunicado-vuelo.zip` (se genera al desplegar) y súbela en claude.ai → Configuración → Personalizar → Skills → *+ Añadir*.
-4. **Proyecto:** crea un Proyecto "Drones", escribe "configúrame" y arrastra tus PDF de AESA. Claude te prepara tus
-   datos y te dice cómo pegarlos en las instrucciones del Proyecto (o sube un `perfil.yaml` si ya lo tienes).
-5. Dentro del Proyecto: *"comunicado el 20 en Genalguacil"*.
+2. **Conector:** app de Claude → Configuración → Personalizar → Conectores → *+ Añadir* → *Añadir conector
+   personalizado* (sin inicio de sesión) → URL `https://comunicados-fpv.netlify.app/mcp` → *Conectar*.
+
+Uso: *"quiero volar el 20 en Genalguacil"*. La primera vez Claude pide permiso para el conector (*Permitir siempre*)
+y, si no hay comunicaciones anteriores en la sede, el teléfono, el dron y los números de AESA.
 
 ## Desarrollo
 ```bash
@@ -36,11 +39,11 @@ npm install
 npm test           # tests del conector (initialize, tools, zona, plazo)
 npx netlify-cli dev   # http://localhost:8888/mcp
 ```
-Las recetas se editan en `src/recetas.md`; `npm run build` las empaqueta en `src/textos.gen.ts` y genera
-`public/descargas/` (skill en .zip y plantilla de perfil). Netlify lo hace solo al desplegar.
+Las recetas se editan en `src/recetas.md`; `npm run build` las empaqueta en `src/textos.gen.ts` (Netlify lo hace
+solo al desplegar).
 
 Todo lo que ve el piloto (web, skill, recetas, mensajes de error) va en **español** y en lenguaje para gente no
-técnica: nada de "MCP", "YAML" o "skill" en la portada ni en lo que Claude le dice.
+técnica: nada de "MCP" o "YAML" en la portada ni en lo que Claude le dice.
 `docs/propuesta.html` es la propuesta interna con los diagramas (no se publica).
 
 ## Licencia

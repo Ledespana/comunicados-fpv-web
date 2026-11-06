@@ -1,11 +1,11 @@
-// Servidor MCP "Comunicados FPV" (fase 1): sin datos personales, solo herramientas puras.
+// Servidor MCP "Comunicados FPV": sin datos personales ni configuración; solo instrucciones y cálculos.
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { zonaCirculo } from "./zona.js";
 import { comprobarPlazo } from "./plazo.js";
-import { RECETAS, PLANTILLA_PERFIL } from "./textos.gen.js";
+import { RECETAS } from "./textos.gen.js";
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.2.0";
 
 const texto = (t: string) => ({ content: [{ type: "text" as const, text: t }] });
 const json = (o: unknown) => texto(JSON.stringify(o, null, 2));
@@ -15,9 +15,11 @@ export function crearServidor(): McpServer {
     { name: "comunicados-fpv", version: VERSION },
     {
       instructions:
-        "Conector para preparar comunicaciones previas de vuelo de dron al Ministerio del Interior de España " +
-        "(drones.ses.mir.es). Cuando el usuario pida un 'comunicado' o 'comunicación de vuelo', llama primero a " +
-        "instrucciones_comunicado y síguelas. Nunca firmes ni presentes sin un 'firma' explícito del usuario.",
+        "Comunicados FPV: comunicaciones previas de vuelo de dron (UAS) al Ministerio del Interior de España " +
+        "(drones.ses.mir.es). Cuando el usuario quiera volar un dron o pida un 'comunicado', 'comunicación de " +
+        "vuelo' o 'avisar a Interior', llama ANTES DE NADA a instrucciones_comunicado y síguelas: no hace falta " +
+        "ningún archivo, perfil ni configuración previa. Habla en español y sin tecnicismos. Nunca firmes ni " +
+        "presentes sin un 'firma' explícito del usuario.",
     },
   );
 
@@ -26,23 +28,12 @@ export function crearServidor(): McpServer {
     {
       title: "Instrucciones para un comunicado",
       description:
-        "Devuelve las instrucciones actualizadas para preparar una comunicación de vuelo de dron en la sede del " +
-        "Ministerio del Interior con Claude in Chrome. Llámala SIEMPRE al empezar un comunicado.",
+        "Instrucciones completas y actualizadas para preparar una comunicación previa de vuelo de dron al " +
+        "Ministerio del Interior de España con Claude in Chrome. Llámala SIEMPRE antes de nada cuando el usuario " +
+        "quiera volar un dron o pida un comunicado; no hace falta perfil ni configuración previa.",
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async () => texto(RECETAS),
-  );
-
-  server.registerTool(
-    "plantilla_perfil",
-    {
-      title: "Plantilla de perfil del piloto",
-      description:
-        "Devuelve la plantilla perfil.yaml (operador, piloto, drones, observadores, preferencias) que el usuario " +
-        "guarda en los archivos de su Proyecto de claude.ai. Úsala si el usuario aún no tiene perfil.",
-      annotations: { readOnlyHint: true, openWorldHint: false },
-    },
-    async () => texto(PLANTILLA_PERFIL),
   );
 
   server.registerTool(

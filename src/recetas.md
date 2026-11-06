@@ -1,52 +1,53 @@
-# Comunicación de vuelo UAS – Ministerio del Interior (recetas v1)
+# Comunicación de vuelo UAS – Ministerio del Interior (recetas v2)
 
 Estas instrucciones las sirve el conector "Comunicados FPV" con `instrucciones_comunicado`. Síguelas en orden.
-Datos del piloto: `perfil.yaml` (archivo del Proyecto o bloque "Perfil del piloto" en sus instrucciones) (operador, piloto, drones, observadores,
-preferencias, ubicaciones). Si no existe, ayuda al usuario a rellenarlo a partir de la plantilla del conector
-(ver §0) antes de nada.
+**No hay archivo de perfil ni configuración previa.** Los datos del piloto salen, por este orden, de:
+1. lo que el usuario diga en este chat (y lo que recuerdes de conversaciones anteriores, si tienes memoria);
+2. **la propia sede de Interior**: los datos del operador se precargan con su certificado, "Mis pilotos" guarda al
+   piloto y cada comunicación anterior se puede **clonar** con drones, zona, observador y altura;
+3. si falta algo, se lo preguntas UNA vez, en un solo mensaje (§0).
 
 Reglas fijas:
 - Usa SIEMPRE Claude in Chrome (el Chrome del usuario): el certificado FNMT, la autoselección de certificado y
   AutoFirma están ahí.
 - Nunca pulses "Firmar y presentar" sin un "firma" explícito del usuario para esa comunicación.
 - Nunca escribas contraseñas ni elijas certificados por el usuario.
-- Identificadores siempre desde `perfil.yaml`, los dos etiquetados: **operador** = `operador.registro_operador`
-  (ESP…, va en "Número de registro de operador") y **piloto** = `piloto.certificado_competencia` (ESP-RP-…, va en
-  "Certificado de competencia de piloto"). Son distintos: nunca uno en lugar del otro.
+- Dos números de AESA distintos, nunca uno en lugar del otro: **operador** (ESP + 12 caracteres, va en "Número de
+  registro de operador") y **piloto** (ESP-RP-…, va en "Certificado de competencia de piloto").
 - Teléfono del operador SIEMPRE en "Datos del Operador > Teléfono de contacto" (lo pide la Guardia Civil).
 - Habla siempre en español, claro y sin tecnicismos: el usuario puede no saber nada de informática. No le digas
   palabras como YAML, JSON, conector, MCP, skill, JavaScript, PrimeFaces o ajax; di "tus datos", "el formulario",
   "la web de Interior". Si algo falla, explícale qué tiene que hacer él, en una o dos frases.
 
-## 0. Perfil ("configúrame")
-Si el Proyecto no tiene los datos del piloto (archivo `perfil.yaml` o un bloque "Perfil del piloto" en las
-instrucciones del Proyecto):
-1. Pide sus dos PDF de AESA (registro de operador UAS, el que tiene logo EASA y fecha de caducidad; y el certificado
-   de piloto A1/A3). Sácales nombre, nº de operador (ESP…) y nº de piloto (ESP-RP-…) y enséñaselos para que confirme.
-2. Pregunta en un solo mensaje, en lenguaje sencillo: DNI o NIE, dirección completa, email, teléfono móvil
-   (obligatorio) y qué drones tiene (marca y modelo; el peso, autonomía, color, radio y luces los buscas tú si es un
-   modelo comercial conocido y solo le preguntas lo que no encuentres).
-3. Rellena la plantilla (`plantilla_perfil`) y dale el resultado en UN solo bloque para copiar, con estas
-   instrucciones, paso a paso y sin palabras técnicas: "Copia el texto de abajo (botón de copiar). Luego, en este
-   Proyecto, abre las instrucciones del proyecto, pega el texto debajo del título «Perfil del piloto» y guarda.
-   Así la próxima vez ya lo sabré."
+## 0. Primera vez (o datos que falten)
+Entra primero en la sede (§3) y mira qué hay: si en Comunicaciones ya hay comunicaciones anteriores, NO preguntes
+nada: clona la más reciente (§4, camino rápido) y usa sus drones, piloto y observador.
+Solo si no hay ninguna comunicación anterior, pregunta en UN mensaje, en lenguaje sencillo:
+- teléfono móvil (obligatorio);
+- qué dron o drones vas a volar (marca y modelo; el peso con batería, autonomía, color, radio y luces los buscas tú
+  si es un modelo comercial conocido y solo preguntas lo que no encuentres);
+- tus dos números de AESA, o que arrastre al chat sus dos PDF de AESA (registro de operador UAS y certificado de
+  piloto A1/A3) y los sacas tú; enséñale los dos números etiquetados para que confirme;
+- si vuela con observador (opcional).
+Los datos personales del operador (nombre, DNI, dirección) los precarga la sede con su certificado: verifícalos,
+no los preguntes; si falta alguno obligatorio, pídelo entonces.
 Dron de construcción propia de 250 g o más → solo puede volar lejos de personas y de zonas urbanas (categoría A3):
 explícalo con esas palabras y no lo incluyas en comunicaciones de vuelo urbano.
 
 ## 1. Datos del vuelo: valores por defecto, NO preguntes
-El usuario quiere decir una frase ("comunicado el 20 en Genalguacil") y nada más. Resuelve con estos valores por
-defecto (`perfil.yaml > preferencias` o, si no hay, los de abajo) y enséñalos en el resumen final:
+El usuario quiere decir una frase ("quiero volar el 20 en Genalguacil") y nada más. Usa estos valores por defecto
+y enséñalos en el resumen final, donde puede corregirlos:
 - **Fecha:** "el 20" = el próximo día 20. Llama a `comprobar_plazo` con la fecha (AAAA-MM-DD); si no cumple, avísalo
   y no sigas (es lo único que para).
-- **Horario:** si no lo dice → `preferencias.horario` (por defecto 00:00–23:55).
-- **Drones:** si no lo dice → todos los de `uas` con `mtom_g` < 250. Nunca uno ≥ 250 g en urbano.
-- **Observador:** si no lo dice → los de `observadores` con `por_defecto: true`; si no hay, ninguno.
+- **Horario:** si no lo dice → todo el día (00:00–23:55).
+- **Drones:** si no lo dice → los de su última comunicación (o los que te dijo en §0). Nunca uno ≥ 250 g en urbano.
+- **Observador:** si no lo dice → el de su última comunicación; si no había, ninguno.
 - **Altura** 120 m, **VLOS**.
 
 ## 2. Zona de vuelo (sitio nuevo)
 1. Coordenadas: si el usuario da coordenadas o enlace de Maps, úsalas. Si da un nombre, búscalo en Google Maps
-   (Claude in Chrome): lugar concreto → ese punto, radio `preferencias.radio_m` (100 m); solo un pueblo → el centro
-   que marca Maps, radio `preferencias.radio_pueblo_m` (500 m). Si es ambiguo, elige el de la provincia del usuario
+   (Claude in Chrome): lugar concreto → ese punto, radio 100 m; solo un pueblo → el centro que marca Maps,
+   radio 500 m. Si es ambiguo, elige el de la provincia del usuario (la de su dirección en la sede)
    y dilo en el resumen.
 2. Comprueba el punto en https://drones.enaire.es: en el buscador escribe **"lat, lon"** (latitud primero, p.ej.
    `36.54567, -5.23548`; al revés cae en África), clic en la sugerencia, verifica con una captura que el pin está en
@@ -70,11 +71,16 @@ todo y repetir (Mac: Cmd+Q; Windows: cerrar todas las ventanas y, si sigue junto
 La navegación directa por URL a veces redirige a /acceso: usa los enlaces del menú (Comunicaciones →
 "Comunicaciones de vuelo").
 
-**Sitio ya usado (camino rápido):** si `ubicaciones.<sitio>.comunicacion_origen` existe → Comunicaciones → icono
-"Clonar la comunicación" de esa fila. Se abre `/clonarComunicacion` con todo precargado excepto **fecha y horas**.
-Si el número de actividades (días × drones) es distinto, añade o quita actividades. Revisa el teléfono del operador.
+**Si hay comunicaciones anteriores (camino rápido, el habitual):** Comunicaciones → mira el listado.
+- Si alguna es del **mismo sitio** (ábrela con "Ver detalle" si hace falta para ver el lugar), clona esa.
+- Si no, clona **la más reciente** igualmente: trae operador, teléfono, piloto, drones y observador. Luego cambia en
+  cada actividad la zona (con la receta de Zona de abajo y el `mapaValue` de `crear_zona`), Lugar de protección,
+  Lugar de recuperación y CC.AA.
+Icono "Clonar la comunicación" de esa fila → se abre `/clonarComunicacion` con todo precargado excepto **fecha y
+horas**. Si el número de actividades (días × drones) es distinto, añade o quita actividades. Revisa el teléfono del
+operador (las comunicaciones antiguas pueden tenerlo vacío).
 
-**Sitio nuevo:** Alta comunicación → En nombre propio. Pestaña Operador: verifica lo precargado y pon el
+**Si no hay ninguna (primera vez):** Alta comunicación → En nombre propio. Pestaña Operador: verifica lo precargado y pon el
 **teléfono**. Actividad 1:
 - Tipo "VLOS"; Lugar protección y Lugar recuperación = `lugar`; Altura 120; CC.AA.: clic en la comunidad del sitio.
 - Zona: `limpiarMapa(id); document.getElementById(id+':mapa_value').value = <mapaValue>; cargarFigurasMapa(id)` con
@@ -120,7 +126,7 @@ hasta que no falte nada.
 ## 6. Después de presentar
 1. En /resultado: "Descargar acuse" y "Descargar PDF" → quedan en la carpeta Descargas del usuario.
 2. Lee en la página el identificador C… y, si aparece, el nº de registro (REGAGE…).
-3. Si el sitio era nuevo, dale al usuario el bloque YAML para añadir a `ubicaciones` de su `perfil.yaml`
-   (lugar, radio_m, poligono y `comunicacion_origen: C…`) para clonarla la próxima vez.
+3. Dile que la próxima vez será más rápido: esta comunicación queda en su cuenta de Interior y se clonará.
+   No le pidas que guarde nada.
 4. Recuérdale: la Guardia Civil puede escribir pidiendo documentación (registro de operador, formación A1/A3 y el
    acuse). Si lo pide, prepara la respuesta como borrador; nunca la envíes sin su "envía".

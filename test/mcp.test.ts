@@ -26,10 +26,18 @@ test("initialize devuelve el nombre del servidor", async () => {
   assert.match(r.result.instructions, /instrucciones_comunicado/);
 });
 
-test("tools/list expone las 4 herramientas", async () => {
+test("tools/list expone las 3 herramientas, todas de solo lectura", async () => {
   const r = await rpc("tools/list");
   const nombres = r.result.tools.map((t: any) => t.name).sort();
-  assert.deepEqual(nombres, ["comprobar_plazo", "crear_zona", "instrucciones_comunicado", "plantilla_perfil"]);
+  assert.deepEqual(nombres, ["comprobar_plazo", "crear_zona", "instrucciones_comunicado"]);
+  for (const t of r.result.tools) assert.equal(t.annotations.readOnlyHint, true, t.name);
+});
+
+test("las instrucciones no dependen de ningún perfil ni Proyecto", async () => {
+  const r = await rpc("tools/call", { name: "instrucciones_comunicado", arguments: {} });
+  const t: string = r.result.content[0].text;
+  assert.doesNotMatch(t, /perfil\.yaml|ubicaciones\.|Proyecto/);
+  assert.match(t, /Clonar la comunicación/);
 });
 
 test("crear_zona devuelve un polígono cerrado de 17 puntos", async () => {
