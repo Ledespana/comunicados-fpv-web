@@ -16,8 +16,9 @@ export function crearServidor(): McpServer {
     {
       instructions:
         "Comunicados FPV: comunicaciones previas de vuelo de dron (UAS) al Ministerio del Interior de España " +
-        "(drones.ses.mir.es). Cuando el usuario quiera volar un dron o pida un 'comunicado', 'comunicación de " +
-        "vuelo' o 'avisar a Interior', llama ANTES DE NADA a instrucciones_comunicado y síguelas: no hace falta " +
+        "(drones.ses.mir.es). Cuando el usuario quiera volar un dron, pida un 'comunicado', 'comunicación de " +
+        "vuelo' o 'avisar a Interior', o diga 'configúrame', llama ANTES DE NADA a instrucciones_comunicado y " +
+        "síguelas: no hace falta " +
         "ningún archivo, perfil ni configuración previa. Habla en español y sin tecnicismos. Nunca firmes ni " +
         "presentes sin un 'firma' explícito del usuario.",
     },
@@ -30,7 +31,7 @@ export function crearServidor(): McpServer {
       description:
         "Instrucciones completas y actualizadas para preparar una comunicación previa de vuelo de dron al " +
         "Ministerio del Interior de España con Claude in Chrome. Llámala SIEMPRE antes de nada cuando el usuario " +
-        "quiera volar un dron o pida un comunicado; no hace falta perfil ni configuración previa.",
+        "quiera volar un dron, pida un comunicado o diga 'configúrame'; no hace falta perfil ni configuración previa.",
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async () => texto(RECETAS),

@@ -5,7 +5,7 @@ Estas instrucciones las sirve el conector "Comunicados FPV" con `instrucciones_c
 1. lo que el usuario diga en este chat (y lo que recuerdes de conversaciones anteriores, si tienes memoria);
 2. **la propia sede de Interior**: los datos del operador se precargan con su certificado, "Mis pilotos" guarda al
    piloto y cada comunicación anterior se puede **clonar** con drones, zona, observador y altura;
-3. si falta algo, se lo preguntas UNA vez, en un solo mensaje (§0).
+3. si falta algo, se lo preguntas UNA vez, en un solo mensaje (§0, opción 2).
 
 Reglas fijas:
 - Usa SIEMPRE Claude in Chrome (el Chrome del usuario): el certificado FNMT, la autoselección de certificado y
@@ -19,18 +19,48 @@ Reglas fijas:
   palabras como YAML, JSON, conector, MCP, skill, JavaScript, PrimeFaces o ajax; di "tus datos", "el formulario",
   "la web de Interior". Si algo falla, explícale qué tiene que hacer él, en una o dos frases.
 
-## 0. Primera vez (o datos que falten)
-Entra primero en la sede (§3) y mira qué hay: si en Comunicaciones ya hay comunicaciones anteriores, NO preguntes
-nada: clona la más reciente (§4, camino rápido) y usa sus drones, piloto y observador.
-Solo si no hay ninguna comunicación anterior, pregunta en UN mensaje, en lenguaje sencillo:
-- teléfono móvil (obligatorio);
-- qué dron o drones vas a volar (marca y modelo; el peso con batería, autonomía, color, radio y luces los buscas tú
-  si es un modelo comercial conocido y solo preguntas lo que no encuentres);
-- tus dos números de AESA, o que arrastre al chat sus dos PDF de AESA (registro de operador UAS y certificado de
-  piloto A1/A3) y los sacas tú; enséñale los dos números etiquetados para que confirme;
-- si vuela con observador (opcional).
-Los datos personales del operador (nombre, DNI, dirección) los precarga la sede con su certificado: verifícalos,
-no los preguntes; si falta alguno obligatorio, pídelo entonces.
+## 0. «Configúrame» (y primera vez)
+Cuando el usuario diga "configúrame", "configurar", "empezar" o "primera vez", o pida un comunicado y en la sede no
+haya ninguna comunicación anterior, ofrécele dos opciones con estas palabras o parecidas:
+
+> ¿Cómo empezamos?
+> 1. **Ya he hecho alguna comunicación en la web de Interior**: cojo tus datos de ahí.
+> 2. **Es la primera vez**: te pregunto lo necesario.
+
+Si pide un comunicado sin decir "configúrame", no preguntes las opciones: entra en la sede y, si hay comunicaciones
+anteriores, sigue la opción 1 sin preguntar; si no hay, la opción 2.
+
+En las dos opciones, primero entra en la sede (§3): así comprobáis que su certificado funciona. Si falla, ayúdale con
+§3 antes de seguir.
+
+**Opción 1 — con los datos de una comunicación anterior**
+1. Comunicaciones → listado. Si hay de varios sitios, dile cuáles hay (fecha y sitio) y usa la más reciente salvo
+   que elija otra.
+2. "Ver detalle" de esa comunicación y apunta: operador (nombre, DNI/NIE, nº de operador ESP…, teléfono), piloto
+   (nombre, nº ESP-RP-…), drones (modelo y peso), observador y sitio.
+3. Enséñaselo en una tabla corta y avisa de lo que haya que arreglar:
+   - teléfono vacío (las comunicaciones antiguas a veces no lo tienen): pídeselo una vez;
+   - falta el nº de operador o el de piloto, o están cambiados: pídelos (o sus PDF de AESA);
+   - algún dron de construcción propia de 250 g o más: explica que no sirve para vuelo urbano.
+4. Cierra con: "Listo. Cuando me digas dónde y cuándo vuelas, copiaré esta comunicación y solo cambiaré la fecha,
+   la hora y, si hace falta, el sitio."
+
+**Opción 2 — desde cero**
+1. Pregunta en UN solo mensaje, en lenguaje sencillo:
+   - teléfono móvil (obligatorio);
+   - qué dron o drones vas a volar (marca y modelo; el peso con batería, autonomía, color, radio y luces los buscas
+     tú si es un modelo comercial conocido y solo preguntas lo que no encuentres);
+   - tus dos números de AESA, o que arrastre al chat sus dos PDF de AESA (registro de operador UAS y certificado de
+     piloto A1/A3) y los sacas tú; enséñale los dos números etiquetados para que confirme;
+   - si vuela con observador (opcional).
+2. Los datos personales del operador (nombre, DNI, dirección) los precarga la sede con su certificado: verifícalos
+   en Alta comunicación → En nombre propio → pestaña Operador; no los preguntes. Si falta alguno obligatorio, pídelo.
+3. Si la sede permite guardar el piloto o los drones fuera de una comunicación ("Mis pilotos", "Mis UAS"), guárdalos
+   allí. Si no, explícale: "Tus datos se guardarán en tu cuenta de Interior con tu primera comunicación; a partir de
+   ahí no te los volveré a preguntar." Si tienes memoria entre conversaciones, recuerda también sus drones y
+   teléfono.
+4. Ofrécele hacer ya su primera comunicación en este mismo chat ("¿Dónde y cuándo vas a volar?").
+
 Dron de construcción propia de 250 g o más → solo puede volar lejos de personas y de zonas urbanas (categoría A3):
 explícalo con esas palabras y no lo incluyas en comunicaciones de vuelo urbano.
 
@@ -40,7 +70,7 @@ y enséñalos en el resumen final, donde puede corregirlos:
 - **Fecha:** "el 20" = el próximo día 20. Llama a `comprobar_plazo` con la fecha (AAAA-MM-DD); si no cumple, avísalo
   y no sigas (es lo único que para).
 - **Horario:** si no lo dice → todo el día (00:00–23:55).
-- **Drones:** si no lo dice → los de su última comunicación (o los que te dijo en §0). Nunca uno ≥ 250 g en urbano.
+- **Drones:** si no lo dice → los de su última comunicación (o los que te dijo en §0, opción 2). Nunca uno ≥ 250 g en urbano.
 - **Observador:** si no lo dice → el de su última comunicación; si no había, ninguno.
 - **Altura** 120 m, **VLOS**.
 

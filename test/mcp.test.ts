@@ -24,6 +24,7 @@ test("initialize devuelve el nombre del servidor", async () => {
   });
   assert.equal(r.result.serverInfo.name, "comunicados-fpv");
   assert.match(r.result.instructions, /instrucciones_comunicado/);
+  assert.match(r.result.instructions, /configúrame/);
 });
 
 test("tools/list expone las 3 herramientas, todas de solo lectura", async () => {
@@ -38,6 +39,8 @@ test("las instrucciones no dependen de ningún perfil ni Proyecto", async () => 
   const t: string = r.result.content[0].text;
   assert.doesNotMatch(t, /perfil\.yaml|ubicaciones\.|Proyecto/);
   assert.match(t, /Clonar la comunicación/);
+  assert.match(t, /Ya he hecho alguna comunicación/);
+  assert.match(t, /Es la primera vez/);
 });
 
 test("crear_zona devuelve un polígono cerrado de 17 puntos", async () => {

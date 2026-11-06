@@ -29,6 +29,9 @@ Requisitos: Chrome, certificado FNMT y AutoFirma; plan de Claude de pago.
 2. **Conector:** app de Claude → Configuración → Personalizar → Conectores → *+ Añadir* → *Añadir conector
    personalizado* (sin inicio de sesión) → URL `https://comunicados-fpv.netlify.app/mcp` → *Conectar*.
 
+Opcional: *"configúrame"* → Claude ofrece 1) coger los datos de una comunicación anterior de la sede o 2) empezar
+desde cero (teléfono, drones y números de AESA), y comprueba el acceso con certificado.
+
 Uso: *"quiero volar el 20 en Genalguacil"*. La primera vez Claude pide permiso para el conector (*Permitir siempre*)
 y, si no hay comunicaciones anteriores en la sede, el teléfono, el dron y los números de AESA.
 
